@@ -1,6 +1,6 @@
 {
   "name": "mozilla-apk-cli",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Command Line Inteface for generating Android native apps from open webapps",
   "developer": [
     {
@@ -23,6 +23,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/mozilla/apk-factory-service.git"
+    "url": "http://github.com/mozilla/apk-cli.git"
   }
 }
