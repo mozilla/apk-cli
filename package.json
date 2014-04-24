@@ -1,0 +1,28 @@
+{
+  "name": "mozilla-apk-cli",
+  "version": "0.0.3",
+  "description": "A Command Line Inteface for generating Android native apps from open webapps",
+  "developer": [
+    {
+      "name": "ozten",
+      "email": "shout@ozten.com"
+    }
+  ],
+  "bin": {
+    "mozilla-apk-cli": "node bin/cli.js"
+  },
+  "dependencies": {
+    "optimist": "0.6.1",
+    "request": "2.34.0",
+    "underscore": "1.6.0",
+    "fs.extra": "1.2.1"
+  },
+  "scripts": {
+    "test": "tap test/*.js",
+    "start": "node scripts/development-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/mozilla/apk-factory-service.git"
+  }
+}
