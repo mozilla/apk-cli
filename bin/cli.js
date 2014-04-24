@@ -125,9 +125,10 @@ if (/^\w+:\/\//.test(argv.manifestOrPackage)) {
       cwd: packageDir
     }, function(err, stdout, stderr) {
       if (err) {
-        console.error('Unable to unzip ' + zipFileLocation, err);
+        console.error('Unable to unzip ' + zipFile, err);
         if (stdout) console.error('unzip STDOUT: ' + stdout);
         if (stderr) console.error('unzip STDERR: ' + stderr);
+        console.error('You must have unzip and zip from Info-ZIP installed.');
         process.exit(1);
       }
       buildPackagedApp(zipFile, function() {
@@ -160,6 +161,7 @@ function buildPackagedApp(zipFileLocation, cb) {
       console.error('Unable to unzip ' + zipFileLocation, err);
       if (stdout) console.error('unzip STDOUT: ' + stdout);
       if (stderr) console.error('unzip STDERR: ' + stderr);
+      console.error('You must have unzip and zip from Info-ZIP installed.');
       try {
         fs.removeSync(extractDir);
       } catch (e) {}
