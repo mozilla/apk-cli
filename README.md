@@ -36,3 +36,23 @@ You will now have `mozilla-apk-cli` installed in `node_modules/.bin`.
       --help, -?          Display this message                                      
       --config-files      Comma seperate file paths
 
+**Note:** Do not upload this .apk into the Google Play store. Do not distribute this as a released Android app through your own website. You're users will not be able to get updates to your app.
+
+
+## Installing the .apk
+
+Now that you have a .apk file, you need to install it on your Android device.
+
+There are two main ways:
+
+1) Setup `adb` and install to your device
+
+    adb install test.apk
+
+If adb is setup correctly, the app should now appear in your list of installed apps. To push an updated .apk, you must un-install before running this command a second time.
+
+2) Request it from a web browser
+
+    python -m SimpleHTTPServer
+
+Figure out your IP Address and point your Android's browser at http://192.168.0.13:8000/test.apk or whatever
