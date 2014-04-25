@@ -1,15 +1,19 @@
 # APK CLI
 
-A Command Line Inteface for generating Android native apps from open webapps.
+A Command Line Interface for generating Android native apps from open webapps.
 
 These are mainly for testing and not for distribution.
 Use the APK Factory Service for distributable .apk files.
 
 ## Getting started
 
+This tool requires [NodeJS](http://nodejs.org), zip, and unzip.
+
     npm install mozilla-apk-cli
 
 You will now have `mozilla-apk-cli` installed in `node_modules/.bin`.
+
+(You can do `npm install -g mozilla-apk-cli` to install this command system wide)
 
 ## Usage
 
