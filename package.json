@@ -1,6 +1,6 @@
 {
   "name": "mozilla-apk-cli",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A Command Line Inteface for generating Android native apps from open webapps",
   "developer": [
     {
@@ -12,10 +12,11 @@
     "mozilla-apk-cli": "./bin/cli.js"
   },
   "dependencies": {
+    "fs.extra": "1.2.1",
     "optimist": "0.6.1",
+    "path-extra": "0.2.0",
     "request": "2.34.0",
-    "underscore": "1.6.0",
-    "fs.extra": "1.2.1"
+    "underscore": "1.6.0"
   },
   "repository": {
     "type": "git",

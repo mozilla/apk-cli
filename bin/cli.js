@@ -14,6 +14,7 @@ var path = require('path');
 var url = require('url');
 
 var optimist = require('optimist');
+var homeDir = require('path-extra').homedir;
 var request = require('request');
 
 var argv = optimist
@@ -46,14 +47,11 @@ var argv = optimist
     }
     argv.manifestOrPackage = argv._[0];
     argv.output = argv._[1];
-    if (-1 === argv.manifestOrPackage.indexOf('://')) {
-      if (!argv.overrideManifest) {
-        argv.overrideManifest = 'https://example.com/manifest.webapp';
-        console.log('setting --overrideManifest to ' + argv.overrideManifest);
-      }
-    }
   })
   .argv;
+
+// Queen Anne
+// 5:45
 
 var fileLoader = require('../lib/file_loader');
 var owaDownloader = require('../lib/owa_downloader');
@@ -105,14 +103,22 @@ if (/^\w+:\/\//.test(argv.manifestOrPackage)) {
       console.error(err);
       process.exit(1);
     }
+    var manifest;
     try {
       // Validate that manifest exists...
-      JSON.parse(data);
+      manifest = JSON.parse(data);
     } catch (e) {
       console.error('Unable to parse JSON from the manifest file ' +
         data);
       console.error(err);
       process.exit(1);
+    }
+    // Make app unique manifest url, if none provided Bug#1001062 Comment#14
+    if (-1 === argv.manifestOrPackage.indexOf('://')) {
+      if (!argv.overrideManifest) {
+        argv.overrideManifest = fakeManifestUrl(manifest.name);
+        console.log('setting --overrideManifest to ' + argv.overrideManifest);
+      }
     }
     var zipFile = path.resolve(packageDir, 'package.zip');
     if (fs.existsSync(zipFile)) {
@@ -266,4 +272,17 @@ function cliClientCb(err, apk) {
     process.exit(1);
   }
 
+}
+
+function fakeManifestUrl(appName) {
+  var home = homeDir();
+  var parts;
+  if (home.indexOf('/') === -1) {
+    parts = home.split('\\');
+  } else {
+    parts = home.split('/');
+  }
+  var username = parts[parts.length - 1].toLowerCase();
+  var escAppName = appName.replace(/[^a-zA-Z0-9_-]/g, '').toLowerCase();
+  return 'https://' + escAppName + username + '.apk.cli.firefox.com/manifest.webapp';
 }
