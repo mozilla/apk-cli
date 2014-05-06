@@ -211,6 +211,11 @@ function buildPackagedApp(zipFileLocation, cb) {
 
       } catch (e) {
         console.error('Unable to read manifest.webapp as JSON');
+        if (e.stack) {
+          console.log(e.stack);
+        } else {
+          console.log(e);
+        }
         console.error(data);
         try {
           fs.removeSync(extractDir);
