@@ -56,3 +56,22 @@ If adb is setup correctly, the app should now appear in your list of installed a
     python -m SimpleHTTPServer
 
 Figure out your IP Address and point your Android's browser at http://192.168.0.13:8000/test.apk or whatever
+
+## Relaunching the .apk
+
+1) Find out your package name
+
+    adb lolcat
+
+Kill you app and then make it run. Look for:
+
+    I/ActivityManager(  612): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.firefox.cli.apk.packagedozten.p3ea7a6153641373b9751d2e48430c43f/org.mozilla.android.synthapk.LauncherActivity} from pid 913 
+
+From this we can wee the packag ename is `com.firefox.cli.apk.packagedozten.p3ea7a6153641373b9751d2e48430c43f`
+
+    $ adb shell
+    # am start -a android.intent.action.MAIN -n com.firefox.cli.apk.packagedozten.p3ea7a6153641373b9751d2e48430c43f/org.mozilla.android.synthapk.LauncherActivity
+
+Which is
+
+    # am start -a android.intent.action.MAIN -n ${PACKAGE_NAME}/org.mozilla.android.synthapk.LauncherActivity
