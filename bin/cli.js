@@ -45,6 +45,12 @@ var argv = optimist
     } else if (argv._.length < 2) {
       throw "";
     }
+
+    if (! argv.overrideManifest) {
+      // This will get overriden server side
+      argv.overrideManifest = 'http://example.com';
+    }
+
     argv.manifestOrPackage = argv._[0];
     argv.output = argv._[1];
   })
@@ -89,6 +95,7 @@ if (/^\w+:\/\//.test(argv.manifestOrPackage)) {
   // Packaged app zip file
 } else if (fileStat && fileStat.isFile()) {
   var zipFileLocation = path.resolve(argv.manifestOrPackage);
+  ensureOverrideManifest();
   buildPackagedApp(zipFileLocation);
   // Packaged app, directory of files
 } else if (fileStat && fileStat.isDirectory()) {
@@ -113,13 +120,7 @@ if (/^\w+:\/\//.test(argv.manifestOrPackage)) {
       console.error(err);
       process.exit(1);
     }
-    // Make app unique manifest url, if none provided Bug#1001062 Comment#14
-    if (-1 === argv.manifestOrPackage.indexOf('://')) {
-      if (!argv.overrideManifest) {
-        argv.overrideManifest = fakeManifestUrl(manifest.name);
-        console.log('setting --overrideManifest to ' + argv.overrideManifest);
-      }
-    }
+    ensureOverrideManifest();
     var zipFile = path.resolve(packageDir, 'package.zip');
     if (fs.existsSync(zipFile)) {
       console.error('package.zip already exists, unable to create ' +
@@ -149,6 +150,16 @@ if (/^\w+:\/\//.test(argv.manifestOrPackage)) {
   //loaderDirname = path.dirname(path.resolve(process.cwd(), manifestUrl));
 }
 
+function ensureOverrideManifest() {
+    // Make app unique manifest url, if none provided Bug#1001062 Comment#14
+    if (-1 === argv.manifestOrPackage.indexOf('://')) {
+      if (!argv.overrideManifest) {
+        argv.overrideManifest = fakeManifestUrl(manifest.name);
+        console.log('setting --overrideManifest to ' + argv.overrideManifest);
+      }
+    }
+}
+
 function buildPackagedApp(zipFileLocation, cb) {
   if (false === fs.existsSync(zipFileLocation)) {
     console.error('Unable to read ' + zipFileLocation);
@@ -159,7 +170,7 @@ function buildPackagedApp(zipFileLocation, cb) {
     fs.removeSync(extractDir);
   } catch (e) {}
   fs.mkdirRecursiveSync(extractDir);
-  var unzipCmd = 'unzip ' + zipFileLocation;
+  var unzipCmd = 'unzip "' + zipFileLocation + '"';
   exec(unzipCmd, {
     cwd: extractDir
   }, function(err, stdout, stderr) {
