@@ -7,7 +7,7 @@ Use the APK Factory Service for distributable .apk files.
 
 ## Getting started
 
-This tool requires [NodeJS](http://nodejs.org), zip, and unzip.
+This tool requires [NodeJS](http://nodejs.org), [zip, and unzip](http://www.info-zip.org/).
 
     npm install mozilla-apk-cli
 
@@ -38,6 +38,9 @@ You will now have `mozilla-apk-cli` installed in `node_modules/.bin`.
 
 **Note:** Do not upload this .apk into the Google Play store. Do not distribute this as a released Android app through your own website. You're users will not be able to get updates to your app.
 
+## Installation problems?
+
+If you are using **Windows** and get errors, [check out these Windows notes](./docs/WINDOWS.md).
 
 ## Installing the .apk
 
