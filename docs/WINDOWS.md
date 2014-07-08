@@ -31,7 +31,7 @@ These are a little tougher to install on Windows, but just follow these steps:
 
 If you need help, check out [Java's instructions on adding a directory to your path](https://www.java.com/en/download/help/path.xml). It is not Java specific and works here too.
 
-6) Restart Windows. You should be able to successfully use `mozilla-apk-cli` now.
+6) Restart Windows.
 
 7) test that `zip` and `unzip` work by launching `cmd.exe`
 
@@ -40,3 +40,4 @@ If you need help, check out [Java's instructions on adding a directory to your p
     C:\Users\IEUser> unzip
     UnZip 6.00 of 20 April 2009... (help page output)
 
+You should be able to successfully use `mozilla-apk-cli` now.
