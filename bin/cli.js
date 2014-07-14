@@ -253,7 +253,9 @@ function cliClient(manifestUrl, manifest, zip, argv, cb) {
       "Content-Type": "application/json"
     }
   }, function(err, res, body) {
-    if (err || 200 !== res.statusCode) {
+    if (503 === res.statusCode) {
+      cb('Server is too busy, try again later.');
+    } else if (err || 200 !== res.statusCode) {
       cb(err || 'Generator response status code was ' + res.statusCode);
     } else {
       var data = JSON.parse(body);
