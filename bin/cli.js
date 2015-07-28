@@ -46,18 +46,14 @@ var argv = optimist
       throw "";
     }
 
-    if (! argv.overrideManifest) {
-      // This will get overriden server side
-      argv.overrideManifest = 'http://example.com';
-    }
-
     argv.manifestOrPackage = argv._[0];
     argv.output = argv._[1];
+
+    if (! argv.overrideManifest) {
+      argv.overrideManifest = defaultOverrideManifest(argv.manifestOrPackage);
+    }
   })
   .argv;
-
-// Queen Anne
-// 5:45
 
 var fileLoader = require('../lib/file_loader');
 var owaDownloader = require('../lib/owa_downloader');
@@ -289,7 +285,6 @@ function cliClientCb(err, apk) {
     console.error(err);
     process.exit(1);
   }
-
 }
 
 function fakeManifestUrl(appName) {
@@ -303,4 +298,13 @@ function fakeManifestUrl(appName) {
   var username = parts[parts.length - 1].toLowerCase();
   var escAppName = appName.replace(/[^a-zA-Z0-9_-]/g, '').toLowerCase();
   return 'https://' + escAppName + username + '.apk.cli.firefox.com/manifest.webapp';
+}
+
+function defaultOverrideManifest(manifestOrPackage) {
+  var urlParts = url.parse(manifestOrPackage);
+  if (['http:', 'https:'].indexOf(urlParts.protocol) !== -1) {
+    return manifestOrPackage;
+  } else {
+    return 'http://example.com';
+  }
 }
