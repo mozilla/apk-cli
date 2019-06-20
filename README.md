@@ -1,3 +1,5 @@
+Note: this project has been archived, as development has stalled, and it isn't being actively maintained, nor used.
+
 # APK CLI
 
 A Command Line Interface for generating Android native apps from open webapps.
